@@ -1,0 +1,5 @@
+task :converge do
+  Dir.chdir("setup") do
+    sh("kitchen converge")
+  end
+end
