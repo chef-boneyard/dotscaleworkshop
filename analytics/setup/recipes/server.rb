@@ -54,6 +54,7 @@ file '/etc/opscode/pivotal.pem' do
   # not actually work, as it checks the presence of this file.
   only_if { ::File.exists?('/etc/opscode/pivotal.pem') }
   subscribes :create, 'chef_server_ingredient[chef-server-core]', :immediately
+  notifies :run, "execute[create admin user]"
 end
 
 chef_server_ingredient 'opscode-manage' do
