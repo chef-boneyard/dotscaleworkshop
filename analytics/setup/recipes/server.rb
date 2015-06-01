@@ -62,24 +62,19 @@ end
 
 directory '/etc/opscode-manage'
 
-file '/etc/opscode-manage/manage.rb' do
-  content "public_port 4443\n\n"
-  notifies :reconfigure, 'chef_server_ingredient[opscode-manage]'
-end
-
-
 chef_server_ingredient 'opscode-reporting' do
   notifies :reconfigure, 'chef_server_ingredient[opscode-reporting]'
 end
 
 execute "create admin user" do
   command "chef-server-ctl user-create analytics Analytics Workshop dont@send.email workshop --filename /tmp/analytics.pem"
-  action :nothing
-  subscribes :run, 'chef_server_ingredient[chef-server-core]'
   notifies :run, 'execute[create analytics org]'
+  creates "/tmp/analytics.pem"
+  action :nothing
 end
 
 execute "create analytics org" do
   command 'chef-server-ctl org-create analytics "Analytics Workshop" --association_user analytics --filename /tmp/analytics-validator.pem'
   action :nothing
+  creates "/tmp/analytics-validator.pem"
 end

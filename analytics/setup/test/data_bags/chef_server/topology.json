@@ -3,7 +3,7 @@
   "topology": "standalone",
   "disabled_svcs": [],
   "enabled_svcs": [],
-  "vips": [{"rabbitmq": "192.168.56.100"}],
+  "vips": [["rabbitmq", "192.168.56.100"]],
   "dark_launch": {
     "actions": true
   },

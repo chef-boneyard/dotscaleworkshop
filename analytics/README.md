@@ -10,8 +10,11 @@ Prerequisities
 4. In this directory, run `rake converge`
 
 Once the rake command has completed, you should be able to go to the
-[Chef Web UI](https://localhost:4443) and log in with username `analytics` and password `workshop`. 
-Once logged in, download a private key for your user by going to FIXME, then copy it to `.chef/analytics.pem` in this directory. Then download a new validator key from FIXME and copy it to `.chef/analytics-validator.pem`. 
-You should now be able to successfully run `knife node list` and get an
-empty list back.
+[Chef Web UI](https://192.168.56.100) and log in with username `analytics` and password `workshop`. 
+Once logged in, download a private key for your user by going to [the user's profile page](https://192.168.56.100/organizations/analytics/users/analytics), selecting `reset key` then copy the text into `.chef/analytics.pem` in this directory. Then download a new validator key by going to [the organization management page](https://192.168.56.100/organizations/analytics), selecting `Reset Validation Key` and copy the text into `.chef/analytics-validator.pem`.
+
+You should now be able to successfully run `knife client list` and see
+`analytics-validator` as the response.
+
+
 

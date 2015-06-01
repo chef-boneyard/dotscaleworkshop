@@ -31,4 +31,10 @@ suites:
         - ["private_network", {ip: "192.168.56.101"}]
     run_list:
       - recipe[analytics-workshop::analytics]
-    attributes:
+
+  - name: client
+    driver:
+      network:
+        - ["private_network", {ip: "192.168.56.102"}]
+    run_list:
+      - recipe[analytics-workshop::client]

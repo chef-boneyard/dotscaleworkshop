@@ -3,3 +3,9 @@ task :converge do
     sh("kitchen converge")
   end
 end
+
+task :destroy do
+  Dir.chdir("setup") do
+    sh("kitchen destroy")
+  end
+end
