@@ -20,3 +20,4 @@ bin/*
 .kitchen.local.yml
 
 *.pem
+.chef/syntax_check_cache
