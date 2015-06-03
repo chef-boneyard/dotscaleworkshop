@@ -35,7 +35,7 @@ end
 task :bootstrap do
   STDOUT.puts "Enter a unique name for your node: "
   name = STDIN.gets.strip
-  sh("/opt/chefdk/bin/knife bootstrap -E production -x vagrant -P vagrant --sudo -N #{name} --node-ssl-verify-mode=none 192.168.56.102")
+  sh("knife bootstrap -E production -x vagrant -P vagrant --sudo -N #{name} --node-ssl-verify-mode=none 192.168.56.102")
 end
 
 namespace :login do
