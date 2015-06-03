@@ -10,6 +10,28 @@ task :destroy do
   end
 end
 
+namespace :upload do
+  task :notifications do
+    Dir.chdir("notifications") do
+      Dir['*.json'].each do |fn|
+        sh("knife notification create #{fn}")
+      end
+    end
+  end
+  task :rules do
+    Dir.chdir("rules") do
+      Dir['*.json'].each do |fn|
+        sh("knife rule create #{fn}")
+      end
+    end
+  end
+end
+
+task :upload do
+  Rake::Task['upload:notifications'].invoke
+  Rake::Task['upload:rules'].invoke
+end
+
 task :bootstrap do
   STDOUT.puts "Enter a unique name for your node: "
   name = STDIN.gets.strip

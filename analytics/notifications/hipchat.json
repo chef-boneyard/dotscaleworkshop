@@ -1,0 +1,13 @@
+{
+  "org_name": "analytics",
+  "name": "hipchat",
+  "modified_by": "analytics",
+  "notification_type": "hipchat",
+  "delivery_options": {
+    "room": "1587867",
+    "api_token": "VCkUvM0nCTktd4fCYhpPJI7xOLOeHvBEvBNkB1L6",
+    "api_version": "2",
+    "from": "Analytics",
+    "color": "green"
+  }
+}
