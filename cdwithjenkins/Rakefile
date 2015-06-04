@@ -1,0 +1,16 @@
+task :converge do
+  Dir.chdir("setup") do
+    sh("kitchen converge")
+  end
+end
+task :destroy do
+  Dir.chdir("setup") do
+    sh("kitchen destroy")
+  end
+end
+
+namespace :login do
+  task :server do
+    sh "ssh vagrant@192.168.56.90"
+  end
+end

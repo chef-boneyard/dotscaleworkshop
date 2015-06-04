@@ -1,0 +1,120 @@
+#CD with Jenkins
+
+## Assuming you have all the pre-requisites met ( ie testkitchen can startup a Centos6-6 instance )
+
+On your workstation, ( all commands should be carried out on your workstation )
+
+# Linx
+```
+ mkdir ~/Source
+ cd ~/Source
+```
+#Windows 
+```
+ mkdir c:\user\<username>\Source
+ cd c:\user\<username>\Source
+```
+
+Clone the chef-cd-workshop
+
+```
+ git clone https://github.com/alexmanly/chef-cd-workshop.git
+```
+
+Now need to edit attributes and add your github and chef credentials.
+
+```
+
+ cd chef-cd-workshop
+
+```
+
+Use your favourite editor to edi the file, sublimetext, notepadd++ etc. 
+
+```
+
+ ./attributes/default.rb
+
+```
+
+Replace obvious ( ALL-CAPITAL-WORDS )parts of the following lines
+
+```
+
+default['jenkins']['git']['username'] = 'ENTER_GIT_USERNAME'
+default['jenkins']['git']['oauth_token'] = 'ENTER_GIT_OAUTH_TOKEN'
+
+
+default['jenkins']['chef']['node_name'] = 'ENTER_CHEF_USERNAME'
+default['jenkins']['chef']['org_name'] = 'ENTER_CHEF_ORGNAME'
+
+
+default['jenkins']['chef']['user_pem_key'] = %q(
+ENTER_CHEF_USER_PEM
+)
+
+
+```
+# Security Alert!
+
+Note:   If you pur your private key, here, please ensure to not save this repo to github
+as everyone/anyone will be able to download your private key.   This is for a classroom exercise only
+normally this key would be secured by an ecrypted databag or some other vault solution.
+
+# how to obtain your Git username and oAuth Token
+
+Sign up to github and remember your username
+
+Create an API token, follow instructions here:-
+
+https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+
+
+# how to obtain your chef username and org_name
+
+ Login to the manage interface on your chef server with your username/password
+
+ Login to hosted chef with your username/password ( https://manage.chef.io )
+
+ edit your knife.rb if you have one, your username should be there
+
+ run the following to find where your knife.rb that you currently using lives 
+ ( assuming you are in the right directory in the first place )
+
+```
+ knife status -VV 
+```
+
+# how to obtain your chef user private key ( ".pem" file )
+
+The loction should be in your knife.rb as per above.   
+
+# Looking good, now time to run testkitchen and see if we will be rewarded for our efforts.
+
+At this point, a lot of things will be downloaded, by everyone in the room,  so be patient.
+
+Whilst it is downlaoding have a look at the cookbooks...do you understand what it is doing?
+
+```
+kitchen converge
+```
+
+
+Next let's fix the networking, so we can easily connect to it on our local workstation.
+
+
+```
+ vi .kitchen.yml
+```
+  Change from this:-
+  ```
+  platforms:
+    - name: ubuntu-12.04
+    - name: centos-6.4
+```
+To this:-
+```
+  platforms:
+-	name: centos-6.6
+```
+Install basic cookbook
