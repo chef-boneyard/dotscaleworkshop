@@ -1,0 +1,7 @@
+name             'demo'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures demo'
+long_description 'Installs/Configures demo'
+version          '0.1.0'

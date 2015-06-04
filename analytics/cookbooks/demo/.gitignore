@@ -8,6 +8,7 @@ pkg/
 
 # Berkshelf
 .vagrant
+/cookbooks
 Berksfile.lock
 
 # Bundler
@@ -17,6 +18,3 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
-
-*.pem
-.chef/syntax_check_cache
