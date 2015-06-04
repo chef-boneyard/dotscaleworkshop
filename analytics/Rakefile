@@ -28,6 +28,7 @@ namespace :upload do
 end
 
 task :upload do
+  sh "chef gem install knife-analytics"
   Rake::Task['upload:notifications'].invoke
   Rake::Task['upload:rules'].invoke
 end
@@ -40,12 +41,18 @@ end
 
 namespace :login do
   task :server do
-    sh "ssh vagrant@192.168.56.100"
+    Dir.chdir("setup") do
+      sh "kitchen login default"
+    end
   end
   task :analytics do
-    sh "ssh vagrant@192.168.56.101"
+    Dir.chdir("setup") do
+      sh "kitchen login analytics"
+    end
   end
   task :client do
-    sh "ssh vagrant@192.168.56.102"
+    Dir.chdir("setup") do
+      sh "kitchen login client"
+    end
   end
 end
