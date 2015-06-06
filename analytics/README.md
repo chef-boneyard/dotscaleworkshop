@@ -17,4 +17,4 @@ You should now be able to successfully run `knife client list` and see
 `analytics-validator` as the response.
 
 
-
+[see this gist](https://gist.github.com/thommay/2081c87efe0c8d09d4f9) for more information
