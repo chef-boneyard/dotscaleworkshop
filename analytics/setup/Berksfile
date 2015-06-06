@@ -1,4 +1,4 @@
 source "https://supermarket.chef.io"
 
-cookbook "chef-server-cluster", :github => 'opscode-cookbooks/chef-server-cluster'
+cookbook "chef-server-cluster", :git => 'https://github.com/opscode-cookbooks/chef-server-cluster'
 metadata
