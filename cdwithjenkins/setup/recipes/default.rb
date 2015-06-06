@@ -164,7 +164,7 @@ template node['jenkins']['master']['home'] +'/io.chef.jenkins.ChefIdentityBuildW
   variables(
     lazy {{
       :chef_id => node["jenkins"]["chef"]["identity"],
-      :user_pem_key => Base64.encode64('{#node["jenkins"]["chef"]["user_pem"]}'),
+      :user_pem_key => Base64.encode64('#{node["jenkins"]["chef"]["user_pem"]}'),
       :knife_rb => Base64.encode64(File.read(knife_rb))
     }}
   )
