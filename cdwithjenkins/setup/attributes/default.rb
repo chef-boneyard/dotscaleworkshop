@@ -33,7 +33,7 @@ O9AJlOMmkr+/ilubx0ros+4a3Ymto/rrnch7ZgYqJq8aW9DpiPjZfkZc
 )
 
 default['jenkins']['admin']['public_key'] = 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDv277N4LdJjQEN/kwbH5r1e3kkpLBUjqAqlj2J+1ctO57hXuNPDP2eeB854UngZUc4QTThwhZdR2PdhtcKMc3XiTA5wcoN3l7SibJ+sk/MMFVupzuz3hBUidLn4KupnGHL0NYZmLpU6D163OCQUQNfaTJSKNE2GHfHQD2kLhCQaaMWupPzGU+oRT9KJHk9yY1HRBP0S893Y9CeG0pJS1B8U4E4rymJr96/IwBEOHQmYPFmcrRGPtRGwNMhRbZUgVNKFJAbyLahvbsppRtwNbXBntBFnGZoxQ2IDHI/Oq6+BIaVVQalqyR0RrGRSJWyWXrTS9EAAtXXqpwBPgcC/kPB'
-default['jenkins']['jobs'] = %w(sample-cookbook-verify sample-cookbook-accept sample-cookbook-ship)
+default['jenkins']['jobs'] = %w(sample-cookbook-verify sample-cookbook-accept sample-cookbook-ship sample-cookbook-fauxlivery)
 default['jenkins']['git']['username'] = 'ENTER_GIT_USERNAME'
 default['jenkins']['git']['oauth_token'] = 'ENTER_GIT_OAUTH_TOKEN'
 default['jenkins']['git']['repo']['sample-cookbook'] = 'https://github.com/' + node['jenkins']['git']['username'] + '/sample-cookbook'
