@@ -14,6 +14,10 @@ when "centos"
     action :create
   end
 when 'ubuntu'
+  packagecloud_repo 'chef/stable'
+
+  package 'delivery-cli'
+  
   execute "apt_update" do
     command "apt-get update"
     action :run
@@ -44,7 +48,10 @@ when "centos"
     action :install
   end
 when 'ubuntu'
-  include_recipe 'docker::package'
+  #include_recipe 'docker::package'
+  docker_service 'default' do
+    action [:create, :start]
+  end
 end
 
 service 'docker' do
@@ -164,7 +171,7 @@ template node['jenkins']['master']['home'] +'/io.chef.jenkins.ChefIdentityBuildW
   variables(
     lazy {{
       :chef_id => node["jenkins"]["chef"]["identity"],
-      :user_pem_key => Base64.encode64(node["jenkins"]["chef"]["user_pem_key"]),
+      :user_pem_key => Base64.encode64('#{node["jenkins"]["chef"]["user_pem_key"]}'),
       :knife_rb => Base64.encode64(File.read(knife_rb))
     }}
   )
