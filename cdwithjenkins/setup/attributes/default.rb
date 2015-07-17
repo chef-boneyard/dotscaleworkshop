@@ -41,6 +41,7 @@ default['jenkins']['git']['repo']['chef-repo'] = 'https://github.com/' + node['j
 default['jenkins']['chef']['identity'] = 'chefconf2015-CDWorkshop'
 default['jenkins']['chef']['node_name'] = 'ENTER_CHEF_USERNAME`'
 default['jenkins']['chef']['org_name'] = 'ENTER_CHEF_ORGNAME'
+default['jenkins']['chef']['chef_server_url'] = 'https://api.opscode.com/organizations/' + node['jenkins']['chef']['org_name']
 default['jenkins']['chef']['user_pem_key'] = %q(
 ENTER_CHEF_USER_PEM
 )
