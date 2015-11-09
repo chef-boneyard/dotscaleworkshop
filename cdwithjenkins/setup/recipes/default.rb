@@ -17,7 +17,7 @@ when 'ubuntu'
   packagecloud_repo 'chef/stable'
 
   package 'delivery-cli'
-  
+
   execute "apt_update" do
     command "apt-get update"
     action :run
@@ -30,11 +30,11 @@ package 'git' do
 end
 
 # Install ChefDK
-chef_dk 'ChefDK' do 
+chef_dk 'ChefDK' do
   action :install
 end
 
-# Install the kitchen-docker driver into ChefDK's embedded Ruby. 
+# Install the kitchen-docker driver into ChefDK's embedded Ruby.
 gem_package 'kitchen-docker' do
   gem_binary('/opt/chefdk/embedded/bin/gem')
   options('--no-user-install --install-dir /opt/chefdk/embedded/lib/ruby/gems/2.1.0')
@@ -67,7 +67,7 @@ group 'docker' do
   append  true
   members 'jenkins'
   notifies :restart, 'service[jenkins]'
-  notifies :restart, 'service[docker]'  
+  notifies :restart, 'service[docker]'
 end
 
 # Add Jenkins plugins
@@ -120,6 +120,8 @@ jenkins_script 'add_authentication' do
     def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
     instance.setAuthorizationStrategy(strategy)
 
+    DownloadSettings.get().setUseBrowser(true)
+
     instance.save()
   EOH
   notifies :create, 'ruby_block[set the security_enabled flag]', :immediately
@@ -136,20 +138,55 @@ ruby_block 'set the security_enabled flag' do
   action :nothing
 end
 
-jenkins_password_credentials node['jenkins']['git']['username'] do   
-  id 'c1803003-e1b4-4957-86a1-327a0e9a6369'   
-  description 'GitHub'   
-  password node['jenkins']['git']['oauth_token'] 
+jenkins_password_credentials node['jenkins']['git']['username'] do
+  id 'c1803003-e1b4-4957-86a1-327a0e9a6369'
+  description 'GitHub'
+  password node['jenkins']['git']['oauth_token']
+end
+
+# Iterate through all items is the 'jobs' data bags
+# These are the seed jobs that will be created
+search('jobs', '*:*').each do |job|
+  # this gets the name of the target seed job
+  jobconfig = job["id"] + '-config.xml'
+  # this is the seedjob filename that is a template
+  puts " seed job inspection ", node['jenkins']['seedjob']['name'].inspect
+  seedjobconfig = "#{node['jenkins']['seedjob']['name']}".to_s + '.xml'
+  # set the attribute job-dsl to be the contents of the databag item job-dsl
+  #node.default['jenkins']['seedjob']['job-dsl'] = job["job-dsl"]
+  puts " job-dsl = ", job['job-dsl'].inspect
+  puts " node stuff ", node['jenkins']['seedjob'].inspect
+  node.default['jenkins']['seedjob']['job-dsl'] = job['job-dsl']
+  # this is target file that will be created
+  target_xml = File.join(Chef::Config[:file_cache_path], jobconfig)
+  # make the target_xml file using the seedjobconfig template,
+  # needs to replace the code in the file
+  puts " template target xml = ", target_xml.inspect
+  puts " source seedjobconfig = ", seedjobconfig.inspect
+  template target_xml do
+    source seedjobconfig + '.erb'
+  end
+  puts " job = ", job['id'].inspect
+  jenkins_job job['id'] do
+    config target_xml
+    notifies :restart, 'service[jenkins]'
+  end
+
+#  job "#{node['myapache-cookbook']['doc-root']}/#{file['id']}" do
+#    content job['content']
+#    mode job['mode']
+#    action :create
+#        end
 end
 
 node['jenkins']['jobs'].each do |job|
   jobconfig = job + '-config.xml'
-  xml = File.join(Chef::Config[:file_cache_path], jobconfig)
-  template jobconfig do
+  jobconfig_xml = File.join(Chef::Config[:file_cache_path], jobconfig)
+  template jobconfig_xml do
     source jobconfig + '.erb'
   end
   jenkins_job job do
-    config jobconfig
+    config jobconfig_xml
     notifies :restart, 'service[jenkins]'
   end
 end

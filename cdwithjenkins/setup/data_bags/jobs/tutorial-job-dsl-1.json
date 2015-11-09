@@ -1,0 +1,4 @@
+{
+    "id":"tutorial-job-dsl-2",
+    "job-dsl":"job('DSL-Tutorial-1-Test') {\n    scm {\n        git('git://github.com/sc0ttruss/Testkitchenscripts.git')\n    }\n    triggers {\n        scm('*/15 * * * *')\n    }\n    steps {\n        maven('-e clean test')\n    }\n}\n"
+}

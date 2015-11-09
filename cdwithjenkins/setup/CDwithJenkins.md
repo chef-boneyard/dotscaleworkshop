@@ -44,7 +44,7 @@ Replace obvious ( ALL-CAPITAL-WORDS )parts of the following lines
 default['jenkins']['git']['username'] = 'ENTER_GIT_USERNAME'
 default['jenkins']['git']['oauth_token'] = 'ENTER_GIT_OAUTH_TOKEN'
 
-
+this has to be your username with admin rights for chef server, ie admin user
 default['jenkins']['chef']['node_name'] = 'ENTER_CHEF_USERNAME'
 default['jenkins']['chef']['org_name'] = 'ENTER_CHEF_ORGNAME'
 
@@ -66,6 +66,14 @@ Sign up to github and remember your username
 Create an API token, follow instructions here:-
 
 https://help.github.com/articles/creating-an-access-token-for-command-line-use
+
+#  How to get this working, create a new admin user on your managed chef server
+
+create admin user `MYADMINUSER`
+
+download the private key.  
+
+Copy private key into the attributes/default.rb, and replace the existing user_pem_key
 
 
 # how to obtain your chef username and org_name
@@ -261,3 +269,5 @@ To verify the plugin is installed properly, go to the Adminstration panel, then 
 Further reference:-
 https://wiki.jenkins-ci.org/display/JENKINS/chef-identity+plugin
 
+# some added functionality, but does not appear to work.
+knife spork promote dev sample-cookbook --remote

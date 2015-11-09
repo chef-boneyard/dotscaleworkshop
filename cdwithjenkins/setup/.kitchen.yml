@@ -1,9 +1,16 @@
 ---
 driver:
   name: vagrant
+  #synced_folders:
+  #- ['~/chef-kits', '/mnt/share', 'disabled: false']
 
 provisioner:
   name: chef_zero
+  #require_chef_omnibus: 12.4.1
+  #chef_omnibus_url: file:///mnt/share/install_chef_rpm.sh
+  client_rb:
+    # Use :enabled, :disabled or :audit_only to run the ServerSpec tests in the recipes 
+    audit_mode: :disabled
 
 platforms:
   #- name: centos-6.6
@@ -14,6 +21,8 @@ platforms:
         
 suites:
   - name: default
+    data_bags_path: "data_bags"
     run_list:
+      #- recipe[chef-cd-workshop::authentication]
       - recipe[chef-cd-workshop::default]
     attributes:
