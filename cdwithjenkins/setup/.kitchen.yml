@@ -13,14 +13,14 @@ provisioner:
     audit_mode: :disabled
 
 platforms:
-  #- name: centos-6.6
+  - name: centos-7.1
   - name: ubuntu-14.04
-    driver:
-      network:
-        - ["private_network", {ip: "192.168.56.90"}]
         
 suites:
   - name: default
+    driver:
+      network:
+        - ["private_network", {ip: "192.168.56.90"}]
     data_bags_path: "data_bags"
     run_list:
       #- recipe[chef-cd-workshop::authentication]
